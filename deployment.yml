@@ -36,4 +36,7 @@ spec:
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
-
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 1
