@@ -6,26 +6,11 @@ Create Horizontal Pod Autoscaler
 Access the app
 ``` http://localhost:8080/ ```
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: myapp
-spec:
-  replicas: 2             ### How many containers will be created as a default 
-  selector:
-    matchLabels:          ### deployment looking for labels to know what he's managing
-      app: myapp
-  template:               ### Template of our app pod Deployment using to scale 
-    metadata:
-      labels:
-        app: myapp        ### label for deployment to look up
-    spec:
-      containers:
-      - name: todoapp
-        resources:          ### Resources we need to give this container limits so he have no more no less 
-          requests:
-            memory: "64Mi"
-            cpu: "30m"
-          limits:
-            memory: "128Mi"
-            cpu: "50m"
+Resource requests and limits are specified in deployment.yml will set a resoures up and bottom CPU and Memory utilization so the pod cant use more that specified in request and do not overuse the limits to avoid crashing all pods in a node in case of failure of one pod becouse of using all the resources.
+
+HPA configuration we are using to set a limits and by reaching them HPA will create more pods to reduce latency and scale app for better performance
+
+Deployment strategy is created to manage our application easier and by the label deployment know which pods to manage and template setup is from what new pods will be created
+
+How to access the app after deployment - we would need to make sure our deployment is running and all required pods are created abd running. Use ``` kubectl describe deployments ```
+If everything is working as expected you can access you app by using ``` http://localhost:8080/ ```
